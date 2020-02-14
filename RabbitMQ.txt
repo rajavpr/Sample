@@ -1,0 +1,62 @@
+Three message protocols widely used:
+ STOPM - Simple Text Orient Messaging Protocol
+ MQTT - Message Queue Telemetry Transport - Machine to Machine connectivity; developed for low Bandwidh, High latency networks like dialup, satelite  links; ideal for bobile and IOT as it is light weight
+ AMQP - Advance Message Queuing Protocol -  works where other protocols fails.
+
+
+
+
+RabbitMQ core:
+
+ Exchange
+ Route(Binding)
+ Queue
+ Route
+
+ PUBLISHers publish to one or more EXCHANGE
+ Exchange  binded to one or more  QUEUE
+ Queue is subscribed one or More SUBSCRIBERS
+
+
+Exchange:-
+Four types:
+Direct
+Fanout
+Topic
+Headers
+
+
+Spring Boot:
+
+Listener: 
+ Configurations:
+	Queue
+	ConnectionFactory -> CachingConnectionFactory - with Host, UserName, password
+	MessageListenerContainer -> SimpleMessageListnerContainer - with ConnectionFacory, Queue, listener Class(our).
+
+Configurations:
+Create Queue by,
+1) new Queue("QueueName", true/false - durable)
+2) QueueBuilder.durable("QueueName").autoDelete().exclusive().build
+
+Create Exchanges:
+1) new TopicExcange("ExcahngeName") - instead of topic you can create Fanout, direct, header etc.
+2) ExchangeBuilder.directExchange("ExchangeName")....
+
+Create Binding:
+1) new Binding("QueueName", Binding.DestinationType.Queue, "ExchangeName", "KeyName", parameters)
+2) BindingBuilder.bind(QueueObject).to(ExchangeObject).with("Routing Key").noargs();
+
+	
+Send Message to Template:
+RabbitTemplate.sendAndConver("ExchangeName", "Routking Key", message/object)
+
+
+Logging:-
+
+Docker Log drivers to log to rolling file or log forwarding to Gray log, fluentd, logstash, AWS cloud watch, Google logging etc.
+https://logging.apache.org/log4j/2.x/manual/cloud.html
+
+
+
+
